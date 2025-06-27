@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Course</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+
+    <script>
+        async function fetchDegrees() {
+            const deptId = document.getElementById('department_id').value;
+            const res = await fetch(`/admin/degrees/${deptId}`);
+            const degrees = await res.json();
+
+            const degreeSelect = document.getElementById('degree_id');
+            degreeSelect.innerHTML = '<option value="">Select Degree</option>';
+            degrees.forEach(d => {
+                degreeSelect.innerHTML += `<option value="${d.id}">${d.name}</option>`;
+            });
+
+            document.getElementById('degree_row').style.display = 'block';
+            document.getElementById('batch_row').style.display = 'none';
+            document.getElementById('semester_row').style.display = 'none';
+            document.getElementById('code_row').style.display = 'none';
+            document.getElementById('title_row').style.display = 'none';
+            document.getElementById('submit_row').style.display = 'none';
+        }
+
+        async function fetchBatches() {
+            const degreeId = document.getElementById('degree_id').value;
+            const res = await fetch(`/admin/batches/${degreeId}`);
+            const batches = await res.json();
+
+            const batchSelect = document.getElementById('batch_id');
+            batchSelect.innerHTML = '<option value="">Select Batch</option>';
+            batches.forEach(b => {
+                batchSelect.innerHTML += `<option value="${b.id}">${b.duration_start} - ${b.duration_end}</option>`;
+            });
+
+            document.getElementById('batch_row').style.display = 'block';
+            document.getElementById('semester_row').style.display = 'none';
+            document.getElementById('code_row').style.display = 'none';
+            document.getElementById('title_row').style.display = 'none';
+            document.getElementById('submit_row').style.display = 'none';
+        }
+
+        function showSemester() {
+            document.getElementById('semester_row').style.display = 'block';
+            document.getElementById('code_row').style.display = 'none';
+            document.getElementById('title_row').style.display = 'none';
+            document.getElementById('submit_row').style.display = 'none';
+        }
+
+        async function updateCode() {
+            const batchId = document.getElementById('batch_id').value;
+            const departmentId = document.getElementById('department_id').value;
+            const semester = document.getElementById('semester').value;
+
+            if (batchId && departmentId && semester) {
+                const res = await fetch('/admin/generate_course_code', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ batch_id: batchId, department_id: departmentId, semester })
+                });
+                const data = await res.json();
+                document.getElementById('code').value = data.course_code;
+
+                document.getElementById('code_row').style.display = 'block';
+                document.getElementById('title_row').style.display = 'block';
+                document.getElementById('submit_row').style.display = 'block';
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Create New Course</h1>
+    <p><a href="/admin/dashboard">Back to Dashboard</a></p>
+    <form method="post">
+        <!-- Department -->
+        <label for="department_id">Department:</label><br>
+        <select name="department_id" id="department_id" onchange="fetchDegrees()" required>
+            <option value="">Select Department</option>
+            {% for dept in departments %}
+                <option value="{{ dept.id }}">{{ dept.name }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <!-- Degree -->
+        <div id="degree_row" style="display:none;">
+            <label for="degree_id">Degree:</label><br>
+            <select name="degree_id" id="degree_id" onchange="fetchBatches()" required></select><br><br>
+        </div>
+
+        <!-- Batch -->
+        <div id="batch_row" style="display:none;">
+            <label for="batch_id">Batch:</label><br>
+            <select name="batch_id" id="batch_id" onchange="showSemester()" required></select><br><br>
+        </div>
+
+        <!-- Semester -->
+        <div id="semester_row" style="display:none;">
+            <label for="semester">Semester:</label><br>
+            <select name="semester" id="semester" onchange="updateCode()" required>
+                <option value="">Select Semester</option>
+                {% for i in range(1, 9) %}
+                    <option value="{{ i }}">{{ i }}</option>
+                {% endfor %}
+            </select><br><br>
+        </div>
+
+        <!-- Code -->
+        <div id="code_row" style="display:none;">
+            <label for="code">Course Code:</label><br>
+            <input type="text" id="code" name="code" readonly required><br><br>
+        </div>
+
+        <!-- Title -->
+        <div id="title_row" style="display:none;">
+            <label for="title">Course Title:</label><br>
+            <input type="text" id="title" name="title" required><br><br>
+        </div>
+
+        <!-- Submit -->
+        <div id="submit_row" style="display:none;">
+            <input type="submit" value="Create Course">
+        </div>
+    </form>
+</body>
+</html>

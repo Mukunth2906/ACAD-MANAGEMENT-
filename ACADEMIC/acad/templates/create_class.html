@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Class</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Create Class</h1>
+    <p><a href="/admin/dashboard">Back to Dashboard</a></p>
+
+    <form method="POST">
+    <label>Class ID:</label><input type="text" name="id" maxlength="5" required><br>
+    
+    <label>Degree:</label>
+    <select name="degree_id" required>
+        {% for degree in degrees %}
+            <option value="{{ degree.id }}">{{ degree.id }}</option>
+        {% endfor %}
+    </select><br>
+
+    <label>Batch:</label>
+    <select name="batch_id" required>
+        {% for batch in batches %}
+            <option value="{{ batch.id }}">{{ batch.id }}</option>
+        {% endfor %}
+    </select><br>
+
+    <label>Department:</label>
+    <select name="department_id" required>
+        {% for dept in departments %}
+            <option value="{{ dept.id }}">{{ dept.id }}</option>
+        {% endfor %}
+    </select><br>
+
+    <input type="submit" value="Create Class">
+</form>
+
+
+
+
+</body>
+</html>

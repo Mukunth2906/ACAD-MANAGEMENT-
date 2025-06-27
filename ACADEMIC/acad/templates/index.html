@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Create Teacher</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        .container {
+            text-align: center;
+        }
+        .container a{
+            font-size: large;
+            text-decoration: none;
+            margin: 25px;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h3>Login as</h3>
+
+            <a href="{{url_for('student_login')}}">Student</a>
+           <a href="{{url_for('teacher_login')}}">Teacher</a>
+
+    </div>
+</body>
+
+</html>

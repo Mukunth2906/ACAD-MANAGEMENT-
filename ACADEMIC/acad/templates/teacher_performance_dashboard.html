@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* General Layout */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 1000px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .course {
+            margin-bottom: 40px;
+        }
+
+        .course h2,
+        .course h3 {
+            font-size: 1.6rem;
+            color: #34495e;
+        }
+
+        .class-summary,
+        .student-performance {
+            margin-bottom: 20px;
+        }
+
+        .class-summary h4,
+        .student-performance h4 {
+            font-size: 1.4rem;
+            color: #34495e;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+
+        ul li {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table th,
+        table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ecf0f1;
+        }
+
+        table th {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #ecf0f1;
+        }
+
+        table tr:hover {
+            background-color: #bdc3c7;
+        }
+
+        .performance {
+            font-weight: bold;
+        }
+
+        .above-average {
+            color: green;
+        }
+
+        .below-average {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Teacher Performance Dashboard</h1>
+        <p><a href="/teacher/dashboard">Back to Dashboard</a></p>
+        {% for course in performance_data %}
+        <div class="course">
+            <h2>{{ course.course_title }} ({{ course.course_code }})</h2>
+            <h3>Class: {{ course.class_id }}</h3>
+
+            <!-- Display Class Averages -->
+            <section class="class-summary">
+                <h4>Class Performance Summary:</h4>
+                <ul>
+                    <li><strong>Average CA1:</strong> {{ course.avg_ca1 }}</li>
+                    <li><strong>Average CA2:</strong> {{ course.avg_ca2 }}</li>
+                    <li><strong>Average Final Exam:</strong> {{ course.avg_final }}</li>
+                    <li><strong>Overall Average:</strong> {{ course.avg_total }}</li>
+                </ul>
+            </section>
+
+            <!-- Display individual student performance -->
+            <section class="student-performance">
+                <h4>Individual Student Performance:</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>CA1</th>
+                            <th>CA2</th>
+                            <th>Final</th>
+                            <th>Total</th>
+                            <th>Performance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in course.student_marks %}
+                        <tr>
+                            <td>{{ student.student_name }}</td>
+                            <td>{{ student.ca1 }}</td>
+                            <td>{{ student.ca2 }}</td>
+                            <td>{{ student.final }}</td>
+                            <td>{{ student.total }}</td>
+
+                            <!-- Performance Comparison -->
+                            <td>
+                                {% if student.ca1 >= course.avg_ca1 %}
+                                <span class="above-average">Above Average (CA1)</span>
+                                {% else %}
+                                <span class="below-average">Below Average (CA1)</span>
+                                {% endif %}
+                                <br>
+                                {% if student.ca2 >= course.avg_ca2 %}
+                                <span class="above-average">Above Average (CA2)</span>
+                                {% else %}
+                                <span class="below-average">Below Average (CA2)</span>
+                                {% endif %}
+                                <br>
+                                {% if student.final >= course.avg_final %}
+                                <span class="above-average">Above Average (Final Exam)</span>
+                                {% else %}
+                                <span class="below-average">Below Average (Final Exam)</span>
+                                {% endif %}
+                                <br>
+                                {% if student.total >= course.avg_total %}
+                                <span class="above-average">Above Average (Overall)</span>
+                                {% else %}
+                                <span class="below-average">Below Average (Overall)</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+
+</html>

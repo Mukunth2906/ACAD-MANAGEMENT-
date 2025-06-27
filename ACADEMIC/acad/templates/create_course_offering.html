@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Course Offering</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Event listener when the course is selected
+            $('#course_code').change(function () {
+                var courseCode = $(this).val(); // Get selected course code
+                
+                if (courseCode) {
+                    // Make an AJAX request to fetch class_id and teacher_id based on course's department
+                    $.ajax({
+                        url: '/admin/get_class_and_teachers',
+                        type: 'GET',
+                        data: { course_code: courseCode },
+                        success: function (data) {
+                            // Update class dropdown
+                            $('#class_id').html('<option value="" disabled selected>Select Class</option>');
+                            $.each(data.classes, function (i, classItem) {
+                                $('#class_id').append('<option value="' + classItem.id + '">' + classItem.id + '</option>');
+                            });
+
+                            // Update teacher dropdown
+                            $('#teacher_id').html('<option value="" disabled selected>Select Teacher</option>');
+                            $.each(data.teachers, function (i, teacherItem) {
+                                $('#teacher_id').append('<option value="' + teacherItem.id + '">' + teacherItem.name + '</option>');
+                            });
+                        }
+                    });
+                } else {
+                    // If no course is selected, reset the dropdowns
+                    $('#class_id').html('<option value="" disabled selected>Select Class</option>');
+                    $('#teacher_id').html('<option value="" disabled selected>Select Teacher</option>');
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Create New Course Offering</h1>
+    <p><a href="/admin/dashboard">Back to Dashboard</a></p>
+
+    <form method="POST">
+        <!-- Course Code Dropdown -->
+        <label for="course_code">Course Code:</label>
+        <select name="course_code" id="course_code" required>
+            <option value="" disabled selected>Select Course</option>
+            {% for course in courses %}
+                <option value="{{ course.code }}">{{ course.code }} - {{ course.title }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <!-- Class ID Dropdown -->
+        <label for="class_id">Class ID:</label>
+        <select name="class_id" id="class_id" required>
+            <option value="" disabled selected>Select Class</option>
+            <!-- Classes will be populated dynamically here -->
+        </select><br><br>
+
+        <!-- Teacher Dropdown -->
+        <label for="teacher_id">Teacher:</label>
+        <select name="teacher_id" id="teacher_id" required>
+            <option value="" disabled selected>Select Teacher</option>
+            <!-- Teachers will be populated dynamically here -->
+        </select><br><br>
+
+        <!-- Semester Input -->
+        <label for="semester">Semester:</label>
+        <input type="number" name="semester" id="semester" required><br><br>
+
+        <input type="submit" value="Create Course Offering">
+    </form>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Update Marks</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+
+</head>
+
+<body>
+    <h1>Enter Marks for Course Offering ID: {{ offering_id }}</h1>
+    <p><a href="/teacher/dashboard">Back to Dashboard</a></p>
+
+    <table>
+        <tr>
+            <th>Roll No</th>
+            <th>Name</th>
+            <th>CA1</th>
+            <th>CA2</th>
+            <th>Final</th>
+            <th>Submit</th>
+        </tr>
+        {% for student in students %}
+        <tr>
+            <form method="POST">
+                <input type="hidden" name="student_id" value="{{ student.roll_no }}">
+                <td>{{ student.roll_no }}</td>
+                <td>{{ student.name }}</td>
+                <td><input type="number" name="ca1" min="0" max="50" value="{{ student.ca1 or '' }}"></td>
+                <td><input type="number" name="ca2" min="0" max="50" value="{{ student.ca2 or '' }}"></td>
+                <td><input type="number" name="final" min="0" max="100" value="{{ student.final or '' }}"></td>
+                <td><input type="submit" value="Submit"></td>
+            </form>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+
+</html>

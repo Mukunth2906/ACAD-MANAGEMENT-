@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head><title>Student Login</title>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Student Login</h1>
+    <form method="POST">
+        Roll No: <input type="text" name="roll_no" required><br>
+        Password: <input type="password" name="password" required><br>
+        <input type="submit" value="Login">
+    </form>
+    <p>Don't have an account? <a href="/student/register">Register here</a></p>
+</body>
+</html>
+

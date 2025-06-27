@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Batch</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Create Batch</h1>
+    <p><a href="/admin/dashboard">Back to Dashboard</a></p>
+
+    <form method="POST">
+    <label>ID:</label><input type="text" name="id" maxlength="2" required><br>
+    <label>Start Year:</label><input type="number" name="start" required><br>
+    <label>End Year:</label><input type="number" name="end" required><br>
+    <input type="submit" value="Create Batch">
+</form>
+
+
+
+</body>
+</html>

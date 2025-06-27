@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Student</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Create New Student</h1>
+    <p><a href="/admin/dashboard">Back to Dashboard</a></p>
+
+    <form method="POST">
+        Roll No: <input type="text" name="roll_no" required><br>
+        Name: <input type="text" name="name" required><br>
+        Password: <input type="password" name="password" required><br>
+
+        Class ID:
+        <select name="class_id" required>
+            <option value="" disabled selected>Select Class</option>
+            {% for class in classes %}
+                <option value="{{ class.id }}">{{ class.id }} - {{ class.degree_id }} {{ class.batch_id }} {{ class.department_id }}</option>
+            {% endfor %}
+        </select><br>
+
+        <input type="submit" value="Create Student">
+    </form>
+</body>
+</html>

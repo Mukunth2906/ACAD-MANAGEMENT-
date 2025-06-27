@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome, Teacher</h1>
+        <p><a href="/logout" class="logout-btn">Logout</a></p>
+        <a href="{{url_for('teacher_performance_dashboard')}}">Performance Dashboard</a>
+        <h2>Your Course Offerings</h2>
+        <ul class="course-list">
+            {% for offering in offerings %}
+            <li class="course-item">
+                <span class="course-title">{{ offering.title }} - Class: {{ offering.class_id }}</span>
+                <a href="/teacher/marks/{{ offering.offering_id }}" class="action-btn">Enter Marks</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

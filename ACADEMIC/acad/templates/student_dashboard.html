@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+
+</head>
+<body>
+    <h1>Welcome Student</h1>
+    <p><a href="/logout">Logout</a></p>
+
+    <h2>Your Marks</h2>
+
+    {% for semester, marks in marks_by_semester.items() %}
+        <h3>Semester {{ semester }}</h3>
+        <table border="1">
+            <tr>
+                <th>Course Code</th>
+                <th>Course</th>
+                <th>CA1</th>
+                <th>CA2</th>
+                <th>Final</th>
+                <th>Total</th>
+            </tr>
+            {% for mark in marks %}
+            <tr>
+                <td>{{ mark.code }}</td>
+                <td>{{ mark.title }}</td>
+                <td>{{ mark.ca1 if mark.ca1 is not none else 'N/A' }}</td>
+                <td>{{ mark.ca2 if mark.ca2 is not none else 'N/A' }}</td>
+                <td>{{ mark.final if mark.final is not none else 'N/A' }}</td>
+                <td>{{ mark.total if mark.total is not none else 'N/A' }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <br>
+    {% endfor %}
+</body>
+</html>

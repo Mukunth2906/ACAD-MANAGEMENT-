@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Welcome Admin</h1>
+    <p><a href="/admin/logout">Logout</a></p>
+
+    <h2>Manage Degrees</h2>
+    <a href="/admin/degree/create">Create New Degree</a>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for degree in degrees %}
+            <tr>
+                <td>{{ degree.id }}</td>
+                <td>{{ degree.name }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Manage Departments</h2>
+    <a href="/admin/department/create">Create New Department</a>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for department in departments %}
+            <tr>
+                <td>{{ department.id }}</td>
+                <td>{{ department.name }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Manage Batches</h2>
+    <a href="/admin/batch/create">Create New Batch</a>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Start Year</th>
+                <th>End Year</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for batch in batches %}
+            <tr>
+                <td>{{ batch.id }}</td>
+                <td>{{ batch.duration_start }}</td>
+                <td>{{ batch.duration_end }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Manage Classes</h2>
+    <a href="/admin/class/create">Create New Class</a>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Degree</th>
+                <th>Department</th>
+                <th>Batch</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cls in classes %}
+            <tr>
+                <td>{{ cls.id }}</td>
+                <td>{{ cls.degree }}</td>
+                <td>{{ cls.department }}</td>
+                <td>{{ cls.duration_start}} - {{cls.duration_end }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Manage Students</h2>
+    <a href="/admin/student/create">Create New Student</a>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Roll No</th>
+                <th>Name</th>
+                <th>Class</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <td>{{ student.roll_no }}</td>
+                <td>{{ student.name }}</td>
+                <td>{{ student.class_name }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Manage Teachers</h2>
+    <a href="/admin/teacher/create">Create New Teacher</a>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Department</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for teacher in teachers %}
+            <tr>
+                <td>{{ teacher.id }}</td>
+                <td>{{ teacher.name }}</td>
+                <td>{{ teacher.department_name }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Manage Courses</h2>
+    <a href="/admin/course/create">Create New Course</a>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Title</th>
+                <th>Department</th>
+                <th>Degree</th>
+                <th>Batch</th>
+                <th>Semester</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for course in courses %}
+            <tr>
+                <td>{{ course.code }}</td>
+                <td>{{ course.title }}</td>
+                <td>{{ course.department_name }}</td>
+                <td>{{ course.degree_name }}</td>
+                <td>{{ course.batch_name }}</td>
+                <td>{{ course.semester }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Manage Course Offerings</h2>
+    <a href="/admin/course_offering/create">Create New Course Offering</a>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Course</th>
+                <th>Class</th>
+                <th>Teacher</th>
+                <th>Semester</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for offering in course_offerings %}
+            <tr>
+                <td>{{ offering.course_code }} - {{ offering.course_title }}</td>
+                <td>{{ offering.class_name }}</td>
+                <td>{{ offering.teacher_name }}</td>
+                <td>{{ offering.semester }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Marks</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Student</th>
+                <th>Course</th>
+                <th>CA1</th>
+                <th>CA2</th>
+                <th>Final</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for mark in marks %}
+            <tr>
+                <td>{{ mark.student_id }} - {{ mark.student_name }}</td>
+                <td>{{ mark.course_code }} - {{ mark.course_title }}</td>
+                <td>{{ mark.ca1 }}</td>
+                <td>{{ mark.ca2 }}</td>
+                <td>{{ mark.final }}</td>
+                <td>{{ mark.total }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

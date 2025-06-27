@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Teacher</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Create New Teacher</h1>
+    <p><a href="/admin/dashboard">Back to Dashboard</a></p>
+
+    <form method="POST">
+        Teacher ID: <input type="text" name="teacher_id" required><br>
+        Name: <input type="text" name="name" required><br>
+
+        Department:
+        <select name="department" required>
+            <option value="" disabled selected>Select Department</option>
+            {% for department in departments %}
+                <option value="{{ department.id }}">{{ department.name }}</option>
+            {% endfor %}
+        </select><br>
+
+        <input type="submit" value="Create Teacher">
+    </form>
+</body>
+</html>

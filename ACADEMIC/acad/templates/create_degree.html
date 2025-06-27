@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Degree</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Create Degree</h1>
+    <p><a href="/admin/dashboard">Back to Dashboard</a></p>
+
+    <form method="POST">
+    <label>ID:</label><input type="text" name="id" maxlength="1" required><br>
+    <label>Name:</label><input type="text" name="name" required><br>
+    <input type="submit" value="Create Degree">
+</form>
+
+</body>
+</html>

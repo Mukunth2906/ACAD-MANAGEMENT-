@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head><title>Student Registration</title>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Register as Student</h1>
+    <form method="POST">
+        Roll No: <input type="text" name="roll_no" required><br>
+        Name: <input type="text" name="name" required><br>
+        Password: <input type="password" name="password" required><br>
+        
+        <!-- Dropdown for Class ID -->
+        Class ID:
+        <select name="class_id" required>
+            <option value="" disabled selected>Select Class</option>
+            {% for class in classes %}
+                <option value="{{ class[0] }}">{{ class[0] }}</option>
+            {% endfor %}
+        </select><br>
+
+        <input type="submit" value="Register">
+    </form>
+    <p>Already registered? <a href="/student/login">Login here</a></p>
+</body>
+</html>
