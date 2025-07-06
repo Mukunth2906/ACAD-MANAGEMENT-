@@ -39,5 +39,7 @@ A comprehensive web-based platform built using *Flask* and *MySQL* to manage stu
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/anukeysh2006/APS.git
-cd APS
+   git clone https://github.com/Mukunth2906/ACAD-MANAGEMENT.git
+###Local Host
+http://localhost/ACAD-MANAGEMENT
+
